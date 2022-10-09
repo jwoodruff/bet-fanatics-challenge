@@ -16,12 +16,14 @@ async function bootstrap() {
       .get(UsersService, { strict: true });
 
     const users = await usersService.findAllOnPage(3);
+    Logger.log(`Users unsorted: ${JSON.stringify(users, null, 2)}`)
     let sortedUsers = [...users];
     sortedUsers = usersService.sort(
       sortedUsers,
       UsersSortFields.name,
       UsersSortDirection.asc,
     );
+    Logger.log(`Users sorted: ${JSON.stringify(sortedUsers, null, 2)}`)
     let updatedUser = sortedUsers[users.length - 1];
     const userID = updatedUser.id;
     Logger.log(
